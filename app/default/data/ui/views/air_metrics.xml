@@ -1,0 +1,151 @@
+<form>
+  <label>Air metrics</label>
+  <description></description>
+  <fieldset submitButton="false">
+    <input type="time" searchWhenChanged="true" token="global_time_tok">
+      <label>Time Range</label>
+      <default>
+        <earliest>@d</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="dropdown">
+      <label>Time Span</label>
+      <choice value="auto">auto</choice>
+      <choice value="5s">5s</choice>
+      <choice value="10s">10s</choice>
+      <choice value="30s">30s</choice>
+      <choice value="1m">1m</choice>
+      <choice value="5m">5m</choice>
+      <choice value="10m">10m</choice>
+      <choice value="30m">30m</choice>
+      <choice value="1h">1h</choice>
+      <default>auto</default>
+      <change>
+        <eval token="timechart_span">if($value$ == "auto", "", "span=".$value$)</eval>
+        <eval token="mstats_span">"span=".$value$</eval>
+      </change>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Ext. temperature (°C)</title>
+      <chart>
+        <title>air.temperature</title>
+        <search>
+          <query>| mstats avg(_value) prestats=true WHERE metric_name="air.temperature" AND index="air-metrics" AND board_id="2511780" $mstats_span$ BY board_id
+| timechart avg(_value) $timechart_span$ agg=max limit=5 useother=false BY board_id
+| fields - _span*</query>
+          <earliest>$global_time_tok.earliest$</earliest>
+          <latest>$global_time_tok.latest$</latest>
+          <refresh>5m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.text">°C</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisY.abbreviation">auto</option>
+        <option name="charting.axisY.includeZero">1</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.fieldColors">{"2511780":"#f2b827","Avg":"#1e93c6","240AC4AD8FA8":"#1e93c6","3C71BF878CE4":"#d6563c","3C71BF96A648":"#6a5c9e"}</option>
+        <option name="charting.fieldDashStyles">{"2511780":"solid","Avg":"solid","240AC4AD8FA8":"solid","3C71BF878CE4":"solid","3C71BF96A648":"solid"}</option>
+        <option name="charting.gridLinesX.showMajorLines">1</option>
+        <option name="charting.legend.mode">seriesCompare</option>
+        <option name="displayview">analytics_workspace</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Ext. humidity (%)</title>
+      <chart>
+        <title>air.humidity</title>
+        <search>
+          <query>| mstats avg(_value) prestats=true WHERE metric_name="air.humidity" AND index="air-metrics" AND board_id="2511780" $mstats_span$ BY board_id
+| timechart avg(_value) $timechart_span$ agg=max limit=5 useother=false BY board_id
+| fields - _span*</query>
+          <earliest>$global_time_tok.earliest$</earliest>
+          <latest>$global_time_tok.latest$</latest>
+          <refresh>5m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.text">%</option>
+        <option name="charting.axisY.abbreviation">auto</option>
+        <option name="charting.axisY.includeZero">1</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.fieldColors">{"2511780":"#1e93c6","Avg":"#1e93c6"}</option>
+        <option name="charting.fieldDashStyles">{"2511780":"solid","Avg":"solid"}</option>
+        <option name="charting.gridLinesX.showMajorLines">1</option>
+        <option name="charting.legend.mode">seriesCompare</option>
+        <option name="displayview">analytics_workspace</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>PM 2.5µ</title>
+      <chart>
+        <title>air.SDS_P2</title>
+        <search>
+          <query>| mstats avg(_value) prestats=true WHERE metric_name="air.SDS_P2" AND index="air-metrics" AND board_id="2511780" $mstats_span$ BY board_id
+| timechart avg(_value) $timechart_span$ agg=max limit=5 useother=false BY board_id
+| fields - _span*</query>
+          <earliest>$global_time_tok.earliest$</earliest>
+          <latest>$global_time_tok.latest$</latest>
+          <refresh>5m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.text">µg/m^3</option>
+        <option name="charting.axisY.abbreviation">auto</option>
+        <option name="charting.axisY.includeZero">1</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.fieldColors">{"2511780":"#1e93c6","Avg":"#1e93c6"}</option>
+        <option name="charting.fieldDashStyles">{"2511780":"solid","Avg":"solid"}</option>
+        <option name="charting.gridLinesX.showMajorLines">1</option>
+        <option name="charting.legend.mode">seriesCompare</option>
+        <option name="displayview">analytics_workspace</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>PM 10µ</title>
+      <chart>
+        <title>airSDS_P1</title>
+        <search>
+          <query>| mstats avg(_value) prestats=true WHERE metric_name="air.SDS_P1" AND index="air-metrics" AND board_id="2511780" $mstats_span$ BY board_id
+| timechart avg(_value) $timechart_span$ agg=max limit=5 useother=false BY board_id
+| fields - _span*</query>
+          <earliest>$global_time_tok.earliest$</earliest>
+          <latest>$global_time_tok.latest$</latest>
+          <refresh>5m</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="charting.axisTitleX.visibility">collapsed</option>
+        <option name="charting.axisTitleY.text">µg/m^3</option>
+        <option name="charting.axisY.abbreviation">auto</option>
+        <option name="charting.axisY.includeZero">1</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.nullValueMode">connect</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.drilldown">none</option>
+        <option name="charting.fieldColors">{"2511780":"#1e93c6","2551024":"#f2b827","Avg":"#1e93c6"}</option>
+        <option name="charting.fieldDashStyles">{"2511780":"solid","2551024":"solid","Avg":"solid"}</option>
+        <option name="charting.gridLinesX.showMajorLines">1</option>
+        <option name="charting.legend.mode">seriesCompare</option>
+        <option name="displayview">analytics_workspace</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+</form>

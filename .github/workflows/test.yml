@@ -14,7 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: repo-name
-        run: echo ::set-env name=REPO_NAME::${{ github.event.repository.name }}
+        run:   echo "$REPO_NAME"
+        shell: bash
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
       - name: Dump github context
         run:   echo "$GITHUB_CONTEXT"
         shell: bash

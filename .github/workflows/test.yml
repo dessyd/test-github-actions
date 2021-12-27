@@ -1,6 +1,4 @@
 ---
-name: "test-env-variables
-
 on: 
   workflow_dispatch:
     inputs:
